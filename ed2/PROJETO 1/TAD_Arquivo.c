@@ -60,7 +60,7 @@ ITEM_VENDA* argMin(BUFFER* buffer){
 
 }
 */
-void Arquivo_Dividir(char* teste, int k, int n_registros)
+void Arquivo_Dividir(char* teste, float k, float n_registros)
 {
     ITEM_VENDA* p = malloc(sizeof(ITEM_VENDA) * ceil(n_registros/k));
     FILE* arq = fopen(teste, "rb");
@@ -81,7 +81,7 @@ void Arquivo_Dividir(char* teste, int k, int n_registros)
         fwrite(p, sizeof(ITEM_VENDA), n_registros/k, saida);
         fclose(saida);
     }
-
+    
     fclose(arq);
     free(p);
 }

@@ -1,5 +1,5 @@
-void Arquivo_Dividir(char* teste, int k, int n_registros);
-BUFFER* Arquivo_BufferEntrada(char* teste, int k, int n_registros);
+void Arquivo_Dividir(char* teste, float k, float n_registros);
+
 
 void troca(ITEM_VENDA* v, int maior, int i);
 int partition(ITEM_VENDA* v, int p, int r);

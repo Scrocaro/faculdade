@@ -4,22 +4,25 @@
 #include <string.h>
 #include "big_file.h"
 #include "TAD_BufferEntrada.h"
+#include "TAD_BufferSaida.h"
 #include "TAD_Arquivo.h"
 
 int main(int argc, char** argv)
 {
-    int n_registros = 256000;
-    int B = 8388608;
-    int S = B/8;
-    int E = 1024 * n_registros;
-    int K = ceil(E/B);
+    float n_registros = 256000;
+    float B = 8388608;
+    float S = B/8;
+    float E = 1024 * n_registros;
+    float K = ceil(E/B);
+
+    printf("%f", K);
 
     printf("sizeof(ITEM_VENDA) = %ld\n", sizeof(ITEM_VENDA));
     gerar_array_iv("teste.dat", n_registros, 42);
     
     Arquivo_Dividir("teste.dat", K, n_registros);
 
-    BUFFER_VET vet[K];
+    BUFFER_VET vet[(int)K];
     
     for (int i = 0; i < K; i++)
     {
@@ -30,11 +33,21 @@ int main(int argc, char** argv)
         vet[i].b = BufferEntrada_Criar(titulo, K, n_registros);
         vet[i].n_buff = K;
     }
+    printf("\n%d\n", vet[0].b->ocupado);
+
     
-    BufferEntrada_Consumir(vet[0].b);
-    for(int i = 0; i < K; i++)
-        for(int j = 0; j < K; j++)
-            printf("id[%d] = %u\n", i, vet[i].b->iv[j].id);   
+    ITEM_VENDA consumido3;
+    for(int w = 0; w < K; w++){
+        for(int j = 0; j < K; j++){
+            consumido3 = BufferEntrada_Consumir(vet[w].b);
+        }
+    }
+    //for(int i = 0; i < K; i++)
+    for(int j = 0; j < K; j++)
+        printf("id[%d] = %u\n", 0, vet[0].b->iv[j].id);   
     
+    
+    printf("\n%d", vet[0].b->ocupado);
+    system("pause");
     return 0;
 }
