@@ -1,0 +1,69 @@
+ITALICO/SUBLINHADO REPRESENTA CHAVE PRIMARIA
+
+T1
+
+atr1
+
+atr2
+
+atr3
+
+atr4
+
+atr5
+
+atr6
+
+atr7
+
+atr8
+
+
+
+Está na 1FN?
+
+sim, não há atributos compostos nem multivalorados.
+
+
+
+Está na 2FN?
+
+não, há dependências parciais em atr5 e atr6, e atr3 e atr4.
+
+
+
+T1
+
+atr1
+
+atr2
+
+atr7
+
+atr8
+
+
+
+T2
+
+atr1 FK
+
+atr5
+
+atr6
+
+
+
+T3
+
+atr2 FK
+
+atr3
+
+atr4
+
+
+
+Está na 3FN?
+
+Ao normalizar para a FN2, já fica normalizada também para a 3FN

@@ -1,0 +1,23 @@
+EMPRESA(cod_empresa, nome_empresa, end_empresa, nome_fundador, nacionalidade_fundador, {FILIAL(filial_nro, filial_local, filial_data_abertura)})
+
+As seguintes dependências funcionais devem ser garantidas na normalização:
+cod_empresa → {nome_empresa, end_empresa, nome_fundador}
+nome_fundador → nacionalidade_fundador
+{cod_empresa, filial_nro} → {filial_local, filial_data_abertura}
+
+
+Está na 1FN? Não. Tem atributos mutivalorados (tabela FILIAL)
+
+EMPRESA(cod_empresa (PK), nome_empresa, end_empresa, nome_fundador, nacionalidade_fundador)
+
+EMPRESA_FILIAL(cod_empresa (FK), filial_nro, filial_local, filial_data_abertura) 
+    cod_empresa e filial_nro compõe a chave primária
+
+Está na 2FN. Sim. Não há dependência parcial.
+
+Está na 3FN. Não. Há depêndencia transitiva.
+
+EMPRESA(cod_empresa (PK), nome_empresa, end_empresa, nome_fundador (FK))
+FUNDADOR(nome_fundador (PK), nacionalidade_fundador)
+EMPRESA_FILIAL(cod_empresa (FK), filial_nro, filial_local, filial_data_abertura) 
+    cod_empresa e filial_nro compõe a chave primária de EMPRESA_FILIAL

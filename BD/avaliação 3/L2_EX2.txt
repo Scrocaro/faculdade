@@ -1,0 +1,24 @@
+Considere as seguintes relações e atributos:
+ALUNO(nro_aluno, cod_depto, nome_depto, sigla_depto, cod_orient, nome_orient, fone_orient, cod_curso)
+
+As seguintes dependências funcionais devem ser garantidas na normalização:
+• cod_depto → {nome_depto, sigla_depto}
+• cod_orient → {nome_orient, fone_orient}
+• nro_aluno → {cod_depto, cod_orient, cod_curso}
+
+Ainda, observe que:
+• um aluno somente pode estar associado a um departamento
+• um aluno cursa apenas um único curso
+• um aluno somente pode ser orientado por um único orientador
+
+
+ALUNO(nro_aluno, cod_depto, nome_depto, sigla_depto, cod_orient, nome_orient, fone_orient, cod_curso)
+
+
+Está na 1FN? Sim. Não tem multivalorado, nem atributo composto.
+Está na 2FN? Sim. Não há dependência parcial.
+Está na 3FN? Não. Há dependências transitivas.
+
+ALUNO(nro_aluno (PK), cod_depto (FK), cod_orient (FK), cod_curso)
+DEPARTAMENTO(cod_depto (PK), nome_depto, sigla_depto)
+ORIENTADOR(cod_orient (PK), nome_orient, fone_orient)

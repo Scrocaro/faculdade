@@ -1,0 +1,164 @@
+                                                	EXERCICIO 1
+VENDEDOR(nro_vend, nome_vend, sexo_vend, {CLIENTE(nro_cli,nome_cli,end_cli)})
+
+•nro_vend → {nome_vend,sexo_vend}
+•nro_cli → {nome_cli,end_cli}
+
+•Por fim, observe que um vendedor pode atender diversos clientes, e um cliente pode ser
+atendido por diversos vendedores.
+
+Descreva as relações na 1FN, 2FN, 3FN e BCNF
+
+
+VENDEDOR    
+    nro_vend
+    nome_vend
+    sexo_vend
+    CLIENTE(nro_cli, nome_cli, end_cli)
+
+
+1FN? não, pois tem atributo multivalorado:
+
+VENDEDOR    
+    nro_vend PK
+    nome_vend
+    sexo_vend
+
+VENDEDOR_CLIENTE
+    nro_vend FK referencia VENDEDOR(nro_vend)
+    nro_cli
+    nome_cli
+    end_cli
+    PK(nro_vend, nro_cli)
+
+
+2FN? nao, pois há dependencia parcial
+
+VENDEDOR    
+    nro_vend PK
+    nome_vend
+    sexo_vend
+
+CLIENTE 
+    nro_cli PK
+    nome_cli
+    end_cli
+
+VENDEDOR_CLIENTE
+    nro_vend FK referencia VENDEDOR(nro_vend)
+    nro_cli FK referencia CLIENTE(nro_cli)
+    PK(nro_vend, nro_cli)
+
+3FN? sim, não há dependencia transitiva.
+
+
+
+																	EXERCICIO 2
+
+ALUNO(nro_aluno, cod_depto, nome_depto, sigla_depto, cod_orient, nome_orient, fone_orient, cod_curso)
+
+•cod_depto -> {nome_depto, sigla_depto}
+•cod_orient -> {nome_orient, fone_orient}
+•nro_aluno -> {cod_depto, cod_orient, cod_curso}
+
+•um aluno somente pode estar associado a um departamento
+•um aluno cursa apenas um único curso
+•um aluno somente pode ser orientado por um único orientador
+
+Descreva as relações na 1FN, 2FN, 3FN e BCNF
+
+
+ALUNO
+    nro_aluno PK
+    cod_depto
+    nome_depto
+    sigla_depto
+    cod_orient
+    nome_orient
+    fone_orient
+    cod_curso
+
+1FN? sim
+
+2FN? sim
+
+3FN? nao, dependencia transitiva
+
+DEPARTAMENTO
+    cod_depto PK
+    nome_depto
+    sigla_depto
+
+ORIENTADOR
+    cod_orient
+    nome_orient
+    fone_orient
+
+ALUNO
+    nro_aluno PK
+    cod_depto FK referencia DEPARTAMENTO(cod_depto)
+    cod_orient FK referencia ORIENTADOR(cod_orient)
+    cod_curso
+
+
+
+
+
+                                               	EXERCICIO 3
+EMPRESA(cod_empresa, nome_empresa, end_empresa, nome_fundador, nacionalidade_fundador, {FILIAL(filial_nro, filial_local, filial_data_abertura)})
+
+
+•cod_empresa → {nome_empresa,end_empresa,nome_fundador}
+•nome_fundador → nacionalidade_fundador
+•{cod_empresa,filial_nro} → {filial_local,filial_data_abertura}
+
+•Uma empresa somente pode ter sido fundada por um único fundador
+
+Descreva as relações na 1FN, 2FN, 3FN e BCNF
+
+EMPRESA
+    cod_empresa
+    nome_empresa
+    end_empresa
+    nome_fundador
+    nacionalidade_fundador
+    FILIAL(filial_nro, filial_local, filial_data_abertura)
+
+1fn? nao, atributo multivalorado
+
+EMPRESA
+    cod_empresa PK
+    nome_empresa
+    end_empresa
+    nome_fundador
+    nacionalidade_fundador
+
+FILIAL_EMPRESA
+    cod_empresa FK
+    filial_nro 
+    filial_local
+    filial_data_abertura
+    PK(cod_empresa, filial_nro)
+
+
+2FN? sim
+
+3FN? nao, dependencia transitiva em EMPRESA
+
+FUNDADOR
+    nome_fundador PK
+    nacionalidade_fundador
+
+EMPRESA
+    cod_empresa PK
+    nome_empresa
+    end_empresa
+    nome_fundador FK
+
+FILIAL_EMPRESA
+    cod_empresa FK
+    filial_nro 
+    filial_local
+    filial_data_abertura
+    PK(cod_empresa, filial_nro)
+
