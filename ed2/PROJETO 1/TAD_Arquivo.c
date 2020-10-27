@@ -35,7 +35,7 @@ int partition(ITEM_VENDA *v, int p, int r)
 }
 
 void quickSort(ITEM_VENDA *v, int e, int d)
-{
+{   
     int q;
     if(e < d)
     {
@@ -44,25 +44,10 @@ void quickSort(ITEM_VENDA *v, int e, int d)
         quickSort(v, q+1, d);
     }
 }
-/*
-ITEM_VENDA* argMin(BUFFER* buffer){
-    ITEM_VENDA* aux1 = buffer->iv[0];
-    int aux2 = buffer->iv[0]->id;
-    for (size_t i = 0; i < buffer->n_reg_max; i++)
-    {
-        if(buffer->iv[i].id < aux2){
 
-        }
-    }
-
-
-    return ;
-
-}
-*/
-void Arquivo_Dividir(char* teste, float k, float n_registros)
+void Arquivo_Dividir(char* teste, int k, int n_reg_b_e)
 {
-    ITEM_VENDA* p = malloc(sizeof(ITEM_VENDA) * ceil(n_registros/k));
+    ITEM_VENDA* p = malloc(sizeof(ITEM_VENDA) * n_reg_b_e);
     FILE* arq = fopen(teste, "rb");
     
     for(int i = 0; i < k; i++)
@@ -73,15 +58,32 @@ void Arquivo_Dividir(char* teste, float k, float n_registros)
         strcat(titulo, ".dat");
         FILE* saida = fopen(titulo, "wb");
 
-        fseek(arq, i*ceil(n_registros/k)*sizeof(ITEM_VENDA), SEEK_SET);
-        fread(p, sizeof(ITEM_VENDA), ceil(n_registros/k), arq);
+        fseek(arq, i*k*sizeof(ITEM_VENDA), SEEK_SET);
+        
+        int inicio = ftell(arq);
+        fseek(arq, 0, SEEK_END);
+        int fim = ftell(arq);
 
-        quickSort(p, 0, ceil(n_registros / k));
+        int tam_restante = fim - inicio;
 
-        fwrite(p, sizeof(ITEM_VENDA), n_registros/k, saida);
+        fseek(arq, i*k*sizeof(ITEM_VENDA), SEEK_SET);
+
+        tam_restante = tam_restante/1024;
+        
+        if(tam_restante>n_reg_b_e){
+            fread(p, sizeof(ITEM_VENDA), n_reg_b_e, arq);
+            quickSort(p, 0, k);
+            fwrite(p, sizeof(ITEM_VENDA), n_reg_b_e, saida);
+        }
+        else{
+            fread(p, sizeof(ITEM_VENDA), tam_restante, arq);
+            quickSort(p, 0, tam_restante);
+            fwrite(p, sizeof(ITEM_VENDA), tam_restante, saida);
+        }
+        
         fclose(saida);
     }
     
     fclose(arq);
-    free(p);
+    //free(p);
 }

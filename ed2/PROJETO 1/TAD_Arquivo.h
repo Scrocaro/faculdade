@@ -1,4 +1,4 @@
-void Arquivo_Dividir(char* teste, float k, float n_registros);
+void Arquivo_Dividir(char* teste, int k, int n_reg_b_e);
 
 
 void troca(ITEM_VENDA* v, int maior, int i);
