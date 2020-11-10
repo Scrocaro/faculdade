@@ -1,0 +1,55 @@
+DROP TABLE IF EXISTS formacao_medica;
+DROP TABLE IF EXISTS tratamento;
+DROP TABLE IF EXISTS pacientes;
+DROP TABLE IF EXISTS medicos;
+DROP TABLE IF EXISTS especialidades;
+DROP TABLE IF EXISTS quartos;
+
+CREATE TABLE quartos (
+    num INTEGER,
+    andar INTEGER,
+    CONSTRAINT pk_quartos PRIMARY KEY (num)
+);
+
+CREATE TABLE especialidades (
+    id INTEGER,
+    nome VARCHAR(255),
+    CONSTRAINT pk_especialidades PRIMARY KEY (id)
+);
+
+CREATE TABLE medicos (
+    crm INTEGER,
+    nome VARCHAR(255),
+    vaga VARCHAR(5),
+    especialidade INTEGER NOT NULL,
+    CONSTRAINT pk_medico PRIMARY KEY (crm),
+    CONSTRAINT fk_medicos_espec FOREIGN KEY (especialidade) REFERENCES especialidades(id)
+);
+
+CREATE TABLE pacientes (
+    cpf INTEGER,
+    nome VARCHAR(255),
+    dt_nascimento DATE,
+    quarto INTEGER NOT NULL,
+    responsavel INTEGER NOT NULL,
+    horario_medico TIME NOT NULL,
+    CONSTRAINT pk_pacientes PRIMARY KEY (cpf),
+    CONSTRAINT fk_pacientes FOREIGN KEY (quarto) REFERENCES quartos(num),
+    CONSTRAINT fk_responsavel FOREIGN KEY (responsavel) REFERENCES medicos(crm)
+);
+
+CREATE TABLE tratamento (
+    medico INTEGER,
+    paciente INTEGER,
+    CONSTRAINT pk_tratamento PRIMARY KEY (medico, paciente),
+    CONSTRAINT fk_tratamento_medicos FOREIGN KEY (medico) REFERENCES medicos(crm),
+    CONSTRAINT fk_tratamento_pacientes FOREIGN KEY (paciente) REFERENCES pacientes(cpf)
+);
+
+CREATE TABLE formacao_medica (
+    medico INTEGER,
+    especialidade INTEGER,
+    CONSTRAINT pk_formacao PRIMARY KEY (medico, especialidade),
+    CONSTRAINT fk_formacao_medico FOREIGN KEY (medico) REFERENCES medicos(crm),
+    CONSTRAINT fk_formacao_especialidade FOREIGN KEY (especialidade) REFERENCES especialidades(id)
+);

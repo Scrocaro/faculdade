@@ -1,0 +1,29 @@
+VENDEDOR(nro_vend, nome_vend, sexo_vend, {CLIENTE(nro_cli, nome_cli, end_cli)})
+
+Além disso, considere que as seguintes dependências funcionais devem ser garantidas na normalização:
+
+• nro_vend → {nome_vend, sexo_vend}
+• nro_cli → {nome_cli, end_cli}
+
+Por fim, observe que um vendedor pode atender diversos clientes, e um cliente pode ser atendido por diversos vendedores.
+
+
+Está na 1FN? Não. Tem atributos multivalorados (uma tabela dentro da outra)
+
+VENDEDOR(nro_vend (PK), nome_vend, sexo_vend)
+
+VENDEDOR_CLIENTE(nro_vend (FK), nro_cli, nome_cli, end_cli)
+   nro_vend e nro_cli compõe a chave primária de VENDEDOR_CLIENTE.
+
+Está na 2FN? Não, pois há dependência parcial em VENDEDOR_CLIENTE.
+
+
+VENDEDOR(nro_vend (PK), nome_vend, sexo_vend)
+
+VENDEDOR_CLIENTE(nro_vend (FK), nro_cli(FK))
+   nro_vend e nro_cli compõe a chave primária de VENDEDOR_CLIENTE.
+
+CLIENTE(nro_cli (PK), nome_cli, end_cli)
+
+Está na 3FN? Sim. Não há dependências transitivas.
+
