@@ -161,6 +161,56 @@ VALUES          ("JAM9245", 5, "Scania R 450", "Preto", 2, "Automático", "Diese
 	INTO	VEICULO_CARGA(placa_veiculo, categoria_veiculo, peso_max_ton, altura, comprimento)
 	VALUE                ("JAM9245", 5, (38.0), (4.0), (7.1));
 
+INSERT 
+INTO     VEICULO(placa, categoria_veiculo, nome, cor, lugares, tipo_cambio, tipo_combustivel, disponibilidade)
+VALUES          ("GAL8204", 4, "VW Delivery 10.160", "Branco", 3, "Manual", "Diesel", "LIVRE");
+
+	INSERT
+	INTO	VEICULO_CARGA(placa_veiculo, categoria_veiculo, peso_max_ton, altura, comprimento)
+	VALUE                ("GAL8204", 4, (3.2), (2.3), (2.6));
+    
+INSERT 
+INTO     VEICULO(placa, categoria_veiculo, nome, cor, lugares, tipo_cambio, tipo_combustivel, disponibilidade)
+VALUES          ("BLA2801", 4, "Accelo 1016", "Preto", 3, "Manual", "Diesel", "LIVRE");
+
+	INSERT
+	INTO	VEICULO_CARGA(placa_veiculo, categoria_veiculo, peso_max_ton, altura, comprimento)
+	VALUE                ("BLA2801", 4, (3.1), (2.4), (2.5));
+
+INSERT 
+INTO     VEICULO(placa, categoria_veiculo, nome, cor, lugares, tipo_cambio, tipo_combustivel, disponibilidade)
+VALUES          ("DIX5028", 4, "Accelo 815", "Vermelho", 3, "Automático", "Diesel", "LIVRE");
+
+	INSERT
+	INTO	VEICULO_CARGA(placa_veiculo, categoria_veiculo, peso_max_ton, altura, comprimento)
+	VALUE                ("DIX5028", 4, (2.8), (2.2), (2.4));
+    
+INSERT 
+INTO     VEICULO(placa, categoria_veiculo, nome, cor, lugares, tipo_cambio, tipo_combustivel, disponibilidade)
+VALUES          ("VIU3451", 4, "Cargo F-4000", "Roxo", 3, "Manual", "Diesel", "LIVRE");
+
+	INSERT
+	INTO	VEICULO_CARGA(placa_veiculo, categoria_veiculo, peso_max_ton, altura, comprimento)
+	VALUE                ("VIU3451", 4, (2.9), (2.6), (2.9));
+    
+INSERT 
+INTO     VEICULO(placa, categoria_veiculo, nome, cor, lugares, tipo_cambio, tipo_combustivel, disponibilidade)
+VALUES          ("TAB3402", 4, "VW Delivery 9.170", "Verde", 3, "Automático", "Diesel", "LIVRE");
+
+	INSERT
+	INTO	VEICULO_CARGA(placa_veiculo, categoria_veiculo, peso_max_ton, altura, comprimento)
+	VALUE                ("TAB3402", 4, (2.6), (2.1), (2.2));
+    
+INSERT 
+INTO     VEICULO(placa, categoria_veiculo, nome, cor, lugares, tipo_cambio, tipo_combustivel, disponibilidade)
+VALUES          ("PIU6439", 4, "Daily 70C17", "Vermelho", 3, "Automático", "Diesel", "LIVRE");
+
+	INSERT
+	INTO	VEICULO_CARGA(placa_veiculo, categoria_veiculo, peso_max_ton, altura, comprimento)
+	VALUE                ("PIU6439", 4, (2.8), (2.3), (2.6));
+    
+
+
 SELECT * FROM VEICULO;
 SELECT * FROM REVISAO;
 SELECT * FROM VEICULO_CARGA;
@@ -294,8 +344,7 @@ VALUES   		(10, "Bruna Trindade", "+55 (17) 94685-9657", "bruninha123@gmail.com"
 	INSERT
     INTO	ENDERECO_CLIENTE(id_cliente, cidade, uf, logradouro, numero, bairro)
     VALUES				    (10, "General Salgado", "SP",  "Rua Augusto Miranda", 64351, "Condado 2");
-    
-    
+
 SELECT * FROM CLIENTE;
 SELECT * FROM PESSOA_FISICA;
 SELECT * FROM PESSOA_JURIDICA;
@@ -398,7 +447,7 @@ VALUES  		   ("594.980.208-09", 3, "37.455.238-1", "Fabiano Silveira", 31, 'M');
 
 	INSERT
 	INTO	DEPENDENTES(cpf_funcionario, nome, id_cargo_funcionario, idade, custo, relacionamento)
-	VALUES			   ("594.980.208-09", "João Silveira", 3, 28, 200.00, "Marido");  
+	VALUES			   ("594.980.208-09", "João Silveira", 3, 28, 200.00, "Marido");
 
 SELECT * FROM FUNCIONARIO;
 SELECT * FROM DEPENDENTES;
