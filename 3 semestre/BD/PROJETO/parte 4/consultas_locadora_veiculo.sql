@@ -179,3 +179,20 @@ WHERE 	V.placa = L.placa_veiculo
 		AND L.id_cliente = EMP.id;
 
 
+-- 16. seleciona o funcionario mais velho e o funcionario mais novo por ordem de idade
+SELECT	F.nome, F.idade
+FROM	funcionario F
+WHERE	F.idade = (
+					SELECT MAX(F2.idade)
+					FROM funcionario F2
+				  )
+UNION
+
+SELECT	F3.nome, F3.idade
+FROM	funcionario F3
+WHERE	F3.idade = (
+					SELECT MIN(F4.idade)
+					FROM funcionario F4
+				  );
+                  
+                  
