@@ -1,0 +1,54 @@
+1)
+SELECT	F.nome, D.id
+FROM	FILME F, DVD D, GENERO G
+WHERE	D.idFilme = F.id
+		AND F.descricaoGenero = G.descricao
+        AND G.descricao = 'Drama'
+GROUP BY D.id; -- filme pode estar em mais de 1 dvd
+
+2)
+SELECT DISTINCT F.descricaoGenero
+FROM filme F, elenco E, genero G, ator A
+WHERE A.nomeReal = E.nomeAtor
+      AND E.idFilme = F.id
+      AND F.descricaoGenero = G.descricao
+      AND F.anoEstreia = 2020
+      AND A.nomeReal LIKE "Severino%"
+
+3)
+SELECT	COUNT(D.id) AS qtdDVDsPorFilmes
+FROM 	DVD D, FILME F
+WHERE 	D.idFilme = F.id
+GROUP BY F.id;
+
+4)
+
+SELECT	DISTINCT F.nome
+FROM	filme F, elenco E, ator A
+WHERE	A.nomeReal NOT LIKE "Severino"
+		AND A.nomeReal = E.nomeAtor
+		AND E.idFilme = F.id
+		AND F.anoEstreia = 2020;
+
+-- ------ ou ------
+
+SELECT	DISTINCT F.descricaoGenero
+FROM	filme F
+WHERE	F.anoEstreia = 2020
+
+EXCEPT
+
+SELECT DISTINCT F2.descricaoGenero
+FROM filme F2, elenco E2, genero G2, ator A2
+WHERE A2.nomeReal = E2.nomeAtor
+      AND E.idFilme = F.id
+      AND F.descricaoGenero = G.descricao
+      AND A.nomeReal LIKE 'Severino';
+
+5)
+
+SELECT 	G.descricao AS genero, count(F.id) AS qtdFilmesEstr2020
+FROM 	genero G, filme F
+WHERE	G.descricao = F.descricaoGenero
+	AND F.anoEstreia = 2020
+GROUP BY G.descricao
