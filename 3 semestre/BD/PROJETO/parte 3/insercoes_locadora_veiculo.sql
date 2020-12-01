@@ -271,7 +271,7 @@ VALUES   		(4, "Beatriz Souza", "+55 (17) 99767-9875", "biasou@gmail.com");
 /*------------ 5 -------------*/
 INSERT 
 INTO     CLIENTE(id, nome, telefone, email)
-VALUES   		(5, "Joaquim Medeiros", "+55 (17) 98136-6745", "NÃO POSSUI");
+VALUES   		(5, "Joaquim Medeiros", "+55 (17) 98136-6745", NULL);
 
 	INSERT 
 	INTO     PESSOA_FISICA(id_cliente, cpf, rg, sexo, idade)
@@ -344,6 +344,19 @@ VALUES   		(10, "Bruna Trindade", "+55 (17) 94685-9657", "bruninha123@gmail.com"
 	INSERT
     INTO	ENDERECO_CLIENTE(id_cliente, cidade, uf, logradouro, numero, bairro)
     VALUES				    (10, "General Salgado", "SP",  "Rua Augusto Miranda", 64351, "Condado 2");
+    
+/*------------ 11 -------------*/
+INSERT
+INTO	CLIENTE(id, nome, telefone, email)
+VALUES  		   (11, "Alice Fazzato", "+55 (17) 98456-8754", "fazzatoalice@gmail.com");
+	
+    INSERT
+	INTO	PESSOA_FISICA(id_cliente, cpf, rg, sexo, idade)
+	VALUES  		   (11, "074.135.964-22", "52.675.335-8", 'F', 37);
+    
+    INSERT
+    INTO	ENDERECO_CLIENTE(id_cliente, cidade, uf, logradouro, numero, bairro)
+    VALUES				    (11, "General Salgado", "SP",  "Rua Augusto Miranda", 64351, "Condado 2");
 
 SELECT * FROM CLIENTE;
 SELECT * FROM PESSOA_FISICA;
@@ -448,6 +461,17 @@ VALUES  		   ("594.980.208-09", 3, "37.455.238-1", "Fabiano Silveira", 31, 'M');
 	INSERT
 	INTO	DEPENDENTES(cpf_funcionario, nome, id_cargo_funcionario, idade, custo, relacionamento)
 	VALUES			   ("594.980.208-09", "João Silveira", 3, 28, 200.00, "Marido");
+
+/*------------ 11 -------------*/
+INSERT
+INTO	FUNCIONARIO(cpf, id_cargo, rg, nome, idade, sexo)
+VALUES  		   ("354.785.469-01", 3, "12.034.576-2", "Otávio Ferreira", 71, 'M');
+
+/*------------ 11 -------------*/
+INSERT
+INTO	FUNCIONARIO(cpf, id_cargo, rg, nome, idade, sexo)
+VALUES  		   ("074.135.964-22", 2, "52.675.335-8", "Alice Fazzato", 37, 'F');
+
 
 SELECT * FROM FUNCIONARIO;
 SELECT * FROM DEPENDENTES;
@@ -556,6 +580,15 @@ VALUES         (11, 9, "576.172.880-00", "IFO2134", '2020-09-08', '2020-10-08');
 INSERT 
 INTO	LOCACAO(id, id_cliente, cpf_funcionario, placa_veiculo, data_inicio, data_termino)
 VALUES         (12, 10, "576.172.880-00", "IFO2134", '2020-10-15', '2020-11-20');
+
+	UPDATE	VEICULO V
+    SET 	V.disponibilidade = "ALUGADO"
+    WHERE   placa = "IFO2134";
+    
+/*------------ 13 -------------*/
+INSERT 
+INTO	LOCACAO(id, id_cliente, cpf_funcionario, placa_veiculo, data_inicio, data_termino)
+VALUES         (13, 11, "576.172.880-00", "IFO2134", '2020-11-22', '2020-12-11');
 
 	UPDATE	VEICULO V
     SET 	V.disponibilidade = "ALUGADO"
