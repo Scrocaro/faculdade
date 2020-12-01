@@ -1,13 +1,15 @@
 -- Selecione todos alunos que são menores do que 20 anos e são do nível 'JR'
 SELECT 	A.nomeAlun
 FROM 	ALUNO A
-WHERE	A.nivel = 'JR'
+WHERE	A.nivel <> 'JR'
 		AND A.idade < 20;
+        
 
 -- Selecione os professores que são do departamento  68
 SELECT 	P.nomeProf
 FROM	PROFESSOR P
 WHERE	idDepto = 68;
+
 
 -- Selecione os alunos que se matricularam em curso de 'Database Systems'
 SELECT 	A.nomeAlun
@@ -16,11 +18,13 @@ WHERE 	A.nroAlun = M.nroAlun
 		AND C.nome = M.nomeCurso
 		AND C.nome = 'Database Systems';
         
+        
 -- Selecione os nomes dos professores que ministraram algum curso na sala '20 AVW'
 SELECT	P.nomeProf
 FROM	PROFESSOR P, CURSO C
 WHERE 	P.idProf = C.idProf
 		AND C.sala = '20 AVW';
+
 
 -- Selecione o nivel dos alunos (sem repetição) que cursaram algum curso na sala '20 AVW'
 SELECT 	DISTINCT A.nivel as Nivel_aluno
@@ -28,45 +32,43 @@ FROM	ALUNO A, MATRICULADO M, CURSO C
 WHERE 	A.nroAlun = M.nroAlun
 		AND M.nomeCurso = C.nome
 		AND C.sala = '20 AVW';
+        
 
 -- Liste o nome do alunos e o nome da formação cuja formação contenha a string 'cie'
 SELECT 	A.nomeAlun, A.formacao
 FROM 	ALUNO A
 WHERE	A.formacao LIKE '%cie%';
 
+
 -- Conte o número de alunos.
 SELECT count(*)
 FROM ALUNO;
+
 
 -- Quantas matrículas há no curso com nome 'Database Systems'
 SELECT count(*)
 FROM MATRICULADO M
 WHERE M.nomeCurso = 'Database Systems';
 
+
 -- Selecione o nome de todos os professores dos departamentos 68 e 12.
 SELECT 	P.nomeProf
 FROM	PROFESSOR P
 WHERE	idDepto = 68 OR idDepto = 12;
 
+
 -- Selecione o nome dos professores que deram aulas no curso com 'Database Systems' ou são do departamento 68.
 SELECT 	DISTINCT P.nomeProf
 FROM	PROFESSOR P, CURSO C
 WHERE	P.idProf = C.idProf
-		AND C.nome = 'Database Systems' OR idDepto = 68;
+		AND (C.nome = 'Database Systems' OR idDepto = 68);
+        
 
 -- Selecione o número dos alunos com formação 'Computer Science' ou que fizeram o curso de 'Database Systems'.
 SELECT 	DISTINCT count(A.nroAlun AND M.nroAlun) AS RESULTADO
 FROM 	ALUNO A, MATRICULADO M
 WHERE 	A.formacao = 'Computer Science'
 		OR (A.nroAlun = M.nroAlun AND M.nomeCurso = 'Database Systems');
-
--- teste
-SELECT 	DISTINCT A.nroAlun
-FROM	ALUNO A, matriculado M
-WHERE	A.nroAlun = M.nroAlun AND M.nomeCurso = 'Database Systems';
-
-
-
 
 
 
