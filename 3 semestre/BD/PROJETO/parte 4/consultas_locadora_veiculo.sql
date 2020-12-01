@@ -1,8 +1,6 @@
 USE locadora_de_veiculos;
 
 -- *(os funcionarios têm a mesma carga horaria)
-
-
 -- 1. nome de todas mulheres (funcionarias) que ganham mais do que qualquer homem.
 SELECT 	F.nome
 FROM	funcionario F, cargo C
@@ -92,7 +90,7 @@ WHERE	C.id IN((
                 
                 
 -- 8. todos veiculos que ja foram alugados por um funcionario
-SELECT	V.nome
+SELECT	V.nome, V.placa
 FROM 	veiculo V, locacao L
 WHERE 	V.placa = L.placa_veiculo
 		AND L.id_cliente IN (
@@ -101,41 +99,10 @@ WHERE 	V.placa = L.placa_veiculo
 							WHERE	C.id = PF.id_cliente
 									AND PF.cpf = F.cpf
 							);
-                            
-                            
--- 9. todos veiculos que ja foram alugados por empresas
-SELECT	V.nome, EMP.nome
-FROM 	veiculo V, locacao L,   (
-								SELECT 	C.id, C.nome
-								FROM	cliente C, pessoa_juridica PJ
-								WHERE	C.id = PJ.id_cliente
-								) AS EMP
-WHERE 	V.placa = L.placa_veiculo
-		AND L.id_cliente = EMP.id;
-
-
--- 10. todos funcionarios que possuem mais de 1 dependentes
-SELECT	F.nome
-FROM	funcionario F, dependentes D
-WHERE	F.cpf = D.cpf_funcionario
-GROUP BY F.cpf
-HAVING	count(*) > 1;
-
-
--- 11. nome das pessoas que alugaram o veiculo de placa IFO2134											
-SELECT	DISTINCT C.nome
-FROM	cliente C
-WHERE 	EXISTS  (
-				SELECT	*
-				FROM	locacao L, veiculo V
-				WHERE	L.placa_veiculo = "IFO2134" 
-						AND L.placa_veiculo = V.placa
-                        AND C.id = L.id_cliente
-				);
                 
                 
--- 12. todos clientes da cidade de "Auriflama" que já alugaram algum veiculo
-SELECT  C.nome
+-- 9. todos clientes da cidade de "Auriflama" que já alugaram algum veiculo
+SELECT  C.nome, C.id
 FROM	cliente C, endereco_cliente EC
 WHERE 	C.id = EC.id_cliente
 		AND EC.cidade = "Auriflama"
@@ -147,7 +114,7 @@ WHERE 	C.id = EC.id_cliente
 					);
                     
                     
--- 12. Seleciona os dados de todos clientes que já alugaram algum veículo de carga, com peso maximo de carga maior de que 30 toneladas.
+-- 10. Seleciona os dados de todos clientes que já alugaram algum veículo de carga, com peso maximo de carga maior de que 30 toneladas.
 SELECT	*
 FROM 	cliente C
 WHERE	C.id IN (
@@ -161,8 +128,54 @@ WHERE	C.id IN (
                                         WHERE	VC.peso_max_ton > 30
 										)
 				);
+                
+                
+-- 11. lista os funcionarios que não possuem um cônjuge dependente
+SELECT	*
+FROM 	funcionario F
+WHERE	F.cpf NOT IN(
+					SELECT 	F2.cpf
+					FROM	funcionario F2, dependentes D
+					WHERE 	F2.cpf = D.cpf_funcionario
+							AND (D.relacionamento = "Marido" OR D.relacionamento = "Esposa")
+					);
+                
+-- 12. nome das pessoas que alugaram o veiculo de placa IFO2134											
+SELECT	DISTINCT C.nome
+FROM	cliente C
+WHERE 	EXISTS  (
+				SELECT	*
+				FROM	locacao L, veiculo V
+				WHERE	L.placa_veiculo = "IFO2134" 
+						AND L.placa_veiculo = V.placa
+                        AND C.id = L.id_cliente
+				);
                     
                     
+-- 13. todos funcionarios que possuem mais de 1 dependentes
+SELECT	F.nome
+FROM	funcionario F, dependentes D
+WHERE	F.cpf = D.cpf_funcionario
+GROUP BY F.cpf
+HAVING	count(*) > 1;
 
+
+-- 14. quantos dependentes existem registrados na empresa para cada cargo
+SELECT 	C.nome, count(F.cpf)
+FROM	funcionario F, cargo C, dependentes D
+WHERE	D.cpf_funcionario = F.cpf
+		AND F.id_cargo = C.id
+GROUP BY C.id;
+
+
+-- 15. todos veiculos que ja foram alugados por empresas
+SELECT	V.nome, EMP.nome as nome_PJ
+FROM 	veiculo V, locacao L,   (	-- subselect a seguir pega todos clientes que sejam empresas (PJ)
+								SELECT 	C.id, C.nome
+								FROM	cliente C, pessoa_juridica PJ
+								WHERE	C.id = PJ.id_cliente
+								) AS EMP
+WHERE 	V.placa = L.placa_veiculo
+		AND L.id_cliente = EMP.id;
 
 

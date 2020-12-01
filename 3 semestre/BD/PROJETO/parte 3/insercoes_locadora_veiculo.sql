@@ -322,7 +322,7 @@ VALUES   		(8, "Kevin Vinil", "+55 (17) 99768-0215", "vinilkevin@gmail.com");
 /*------------ 9 -------------*/
 INSERT 
 INTO     CLIENTE(id, nome, telefone, email)
-VALUES   		(9, "Jubileu Souza", "+55 (17) 95467-2354", "vcnsabenemeu@gmail.com");
+VALUES   		(9, "Irineu Souza", "+55 (17) 95467-2354", "vcnsabenemeu@gmail.com");
 
 	INSERT 
 	INTO     PESSOA_FISICA(id_cliente, cpf, rg, sexo, idade)
