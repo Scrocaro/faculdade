@@ -9637,7 +9637,7 @@ advindo
 advinha
 advinham
 advinhas
-advir
+advir                       
 advirdes
 advirei
 advireis

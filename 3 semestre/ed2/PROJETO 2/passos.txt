@@ -28,7 +28,7 @@
     
         • Regra 1: Retorne palavras que casem com ρ substituindo uma letra de cada vez pelo coringa. Por exemplo, se ρ = “ratp”, sugira palavras
                    que casem com “*atp”, “r*tp”, “ra*p” e “rat*”.
-    
+
         • Regra 2: Esta regra só deve ser usadas para encontras sugestões para palavras com mais que 5 letras. Sugira as palavras que são os
                    prefixos de ρ que vão até a posição n-3 e n-2 de ρ, tal que n é o comprimentode ρ. Por exemplo, se ρ= “saladq”, sugira palavras
                    com os prefixos “salad” e “sala”.
