@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node
+{
+    int linha;
+    int coluna;
+    int valor;
+    struct node* direita;
+    struct node* baixo;
+    struct node* esquerda;
+    struct node* baixo;
+
+}Node;
+
+typedef struct
+{
+    Node** linhas;    //ponteiro para o vetor cujas células são ponteiros de nós
+    Node** colunas;   //ponteiro para o vetor cujas células são ponteiros de nós
+    int numLinhas;    //Quantidade de linhas da matriz
+    int numColunas;   //Quantidade de colunas da matriz
+}Matriz;
+
+
+
+Matriz* matriz_criar(int qtdeLinhas, int qtdeColunas);
+//Cria uma matriz vazia e devolve seu endereço de memória.
+
+int matriz_atribuir(Matriz* m, int linha, int coluna, int valor);
+//Insere o <valor> na matriz <m> na linha <linha> e coluna <coluna>. Caso a posição já exista, substitua o valor da célula.
+
+int matriz_acessar(Matriz* m, int linha, int coluna);
+//Devolve o valor correspondente a linha e coluna solicitada. Faça a validação dos índices. Caso a posição solicitada esteja fora do intervalo, devolva zero.
+
+void matriz_imprimir(Matriz* m);
+//Imprime os valores da matriz na tela. Cada linha deve ser impressa em uma linha diferente e os elementos separados por espaço ou tabulação. Os elementos não representados na matriz (valor zero), também devem ser impressos.
+
+void matriz_desalocar(Matriz* m);
+//Libera toda memória alocada dinamicamente para a matriz.
+
+//////////////////IMPLEMENTAÇÃO/////////////////////////
+
+Matriz* matriz_criar(int qtdeLinhas, int qtdeColunas)
+{
+    Matriz* m = (Matriz*) malloc(sizeof(Matriz));
+    m->numLinhas = qtdeLinhas;
+    m->numColunas = qtdeColunas;
+
+    m->linhas = (Node**) calloc(sizeof(Node*));
+    m->colunas = (Node**) calloc(sizeof(Node*));
+
+    for(int i = 0; i<qtdeLinhas; i++)
+    {
+        m->linhas[i] = (Node*) malloc(Node);
+        m->linhas[i]->cima = m->linhas[i];
+        m->linhas[i]->direita = m->linhas[i];
+        m->linhas[i]->baixo = m->linhas[i];
+        m->linhas[i]->esquerda = m->linhas[i];
+    }
+
+    for(int i = 0; i<qtdeLinhas; i++)
+    {
+        m->colunas[i] = (Node*) malloc(Node);
+        m->colunas[i]->cima = m->colunas[i];
+        m->colunas[i]->direita = m->colunas[i];
+        m->colunas[i]->baixo = m->colunas[i];
+        m->colunas[i]->esquerda = m->colunas[i];
+    }
+}
+
+int matriz_atribuir(Matriz* m, int linha, int coluna, int valor)
+{
+    if(linha > m->qtdeLinhas) return false;
+    if(coluna > m->qtdeColunas) return false;
+    if(m->linhas->)
+
+}
+
+int main()
+{
+  Matriz* m = matriz_criar(4, 4);
+
+}
