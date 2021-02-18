@@ -2,13 +2,12 @@
 
 #include <stdio.h>
 #include <string.h>
-#define N 7
 
 
-void cadastraCliente (int pos);
+void cadastraCliente ();
 void listaTodosCliente ();
-void listaCliente (int pos);
-void inicializaVetor ();
+void listaCliente ();
+void inicializa ();
 int buscaPosicaoVazia ();
 int menu ();
 int buscaCPF (long cpf);
@@ -18,6 +17,7 @@ int submenu ();
 void deposito (float money, int conta, int ag, int cont);
 int saque ();
 
+int id = 0;
 
 struct REGISTRO
 {
@@ -26,14 +26,19 @@ struct REGISTRO
   int id, flag;
   float saldo;
 };
-struct REGISTRO cliente[N];
+struct REGISTRO cliente;
 
 
-void inicializaVetor ()
+void inicializa()
 {
-for (int i=0; i<N; i++)
-    cliente[i].flag=0;
+    FILE *arq;
+    arq = fopen("testeArq.bin", "ab+");
+    if (arq == NULL)
+        printf("Erro na abertura do arquivo!\n");
+    else
+        fclose(arq);
 }
+
 
 int menu ()
 {
@@ -56,23 +61,34 @@ int submenu ()
 }
 
 
-void cadastraCliente (int pos)
+void cadastraCliente()
 {
-  printf("Digite a Agência: ");
-  scanf("%ld", &cliente[pos].ag);
-  printf("Digite a conta: ");
-  scanf("%ld", &cliente[pos].conta);
-  printf("Nome: ");
-  scanf(" %[^\n]", cliente[pos].nome);
-  printf("CPF: ");
-  scanf("%ld", &cliente[pos].cpf);
-  cliente[pos].id=pos;
-  cliente[pos].flag=1;
-  cliente[pos].saldo=0;
-  printf("Cliente cadastrado\n");
+    struct REGISTRO c;
+        printf("Digite a Agência: ");
+        scanf("%ld", &c.ag);
+        printf("Digite a conta: ");
+        scanf("%ld", &c.conta);
+        printf("Nome: ");
+        scanf(" %[^\n]", c.nome);
+        printf("CPF: ");
+        scanf("%ld", &c.cpf);
+        c.id = id++;
+        c.flag = 1;
+        c.saldo = 0;
+        printf("Cliente cadastrado\n");
+
+        FILE *arq;
+        arq = fopen("testeArq.bin", "ab+");
+        if (arq == NULL)
+            printf("Erro!\nArquivo não pode ser aberto!\n");
+        else
+        {
+            fwrite(&c, sizeof(c), 1, arq);
+            fclose(arq);
+        }
 }
 
-
+/*
 void listaCliente (int pos)
 {
     printf("Cliente ID: %d\n", cliente[pos].id);
@@ -83,32 +99,43 @@ void listaCliente (int pos)
     printf("Saldo: R$ %.2f\n", cliente[pos].saldo);
     printf("\n -------------------- \n");
 }
-
+*/
 
 void listaTodosCliente ()
 {
     int cont=0;
-    for (int i=0; i<N; i++)
+    struct REGISTRO ccc;
+    FILE *arq;
+    arq = fopen("testeArq.bin", "rb+");
+    if (arq == NULL)
+        printf("Erro na abertura do arquivo!\n");
+    else
     {
-        if (cliente[i].flag == 1)
+        while(fread(&ccc, sizeof(ccc), 1, arq))
         {
-            printf("Cliente ID: %d\n", cliente[i].id);
-            printf("Agencia: %ld\n", cliente[i].ag);
-            printf("Conta: %ld\n", cliente[i].conta);
-            printf("Nome: %s\n", cliente[i].nome);
-            printf("CPF: %ld\n", cliente[i].cpf);
-            printf("Saldo: R$ %.2f\n", cliente[i].saldo);
-            printf("\n -------------------- \n");
-            cont++;
+            if (ccc.flag == 1)
+            {
+                printf("Cliente ID: %d\n", ccc.id);
+                printf("Agencia: %ld\n", ccc.ag);
+                printf("Conta: %ld\n", ccc.conta);
+                printf("Nome: %s\n", ccc.nome);
+                printf("CPF: %ld\n", ccc.cpf);
+                printf("Saldo: R$ %.2f\n", ccc.saldo);
+                printf("\n -------------------- \n");
+                cont++;
+              }
         }
+        printf("Há %d clientes\n", cont);
+        if (cont==0)
+            printf("Não há clientes registrados\n");
     }
-    if (cont==0)
-    {
-        printf("Não há clientes registrados\n");
-    }
+    if (ferror(arq))
+        printf("Erro na gravação!\n");
+
+    fclose(arq);
 }
 
-
+/*
 int buscaPosicaoVazia ()
 {
     for (int i=0; i<N; i++)
@@ -120,8 +147,8 @@ int buscaPosicaoVazia ()
     }
     return -1;
 }
-
-
+*/
+/*
 int buscaCPF (long cpf)
 {
     for (int i=0; i<N; i++)
@@ -131,8 +158,8 @@ int buscaCPF (long cpf)
     return -1;
     }
 }
-
-
+*/
+/*
 void buscaNome (char str[])
 {
     int retorno, cont=0;
@@ -148,8 +175,8 @@ void buscaNome (char str[])
     if (cont == 0)
         printf("Cliente não cadastrado\n");
 }
-
-
+*/
+/*
 void removeCliente (int pos)
 {
     long cpfr;
@@ -168,8 +195,8 @@ void removeCliente (int pos)
     else
         printf("Cliente não registrado");
 }
-
-
+*/
+/*
 void deposito (float money, int conta, int ag, int cont)
 {
     int x = 0;
@@ -196,7 +223,7 @@ void deposito (float money, int conta, int ag, int cont)
         printf("Cliente não localizado");
 
 }
-
+*/
 
 int main()
 {
@@ -204,45 +231,41 @@ int main()
     long cpfBusca;
     char nomeBusca[51];
     float money;
-    inicializaVetor();
+    inicializa();
     do{
         op = menu();
         switch (op)
         {
-          case 1: a = buscaPosicaoVazia();
-                  if (a != -1)
-                      cadastraCliente(a);
-                  else
-                      printf("Erro!\nVetor cheio!\n");
+          case 1: cadastraCliente();
                   break;
           case 2: listaTodosCliente();
                   break;
-          case 3: a = submenu();
-                  if (a == 1)
-                  {
-                      printf("Busca nome: ");
-                      scanf("%s", &nomeBusca);
-                      buscaNome(nomeBusca);
-                  }
-                  else if(a == 2)
-                  {
-                      printf("busca cpf: ");
-                      scanf("%ld", &cpfBusca);
-                      p = buscaCPF(cpfBusca);
-                      if (p != -1)
-                          listaCliente(p);
-                      else
-                          printf("Cliente não localizado\n");
-                  }
-                  else
-                      printf("Opção inválida.\n");
-                  break;
-          case 4: printf("Digite o id do cliente a ser removido: ");
-                  scanf("%d", &pos);
-                  removeCliente(pos);
-                  break;
-          case 5: deposito(money, conta, ag, contdep);
-                  break;
+          //case 3: a = submenu();
+            //      if (a == 1)
+              //    {
+                //      printf("Busca nome: ");
+                  //    scanf("%s", &nomeBusca);
+                    //  buscaNome(nomeBusca);
+                //  }
+                //  else if(a == 2)
+                //  {
+                  //    printf("busca cpf: ");
+                  //    scanf("%ld", &cpfBusca);
+                //      p = buscaCPF(cpfBusca);
+                //      if (p != -1)
+              //            listaCliente(p);
+              //        else
+              //            printf("Cliente não localizado\n");
+              //    }
+              //    else
+              //        printf("Opção inválida.\n");
+              //    break;
+          //case 4: printf("Digite o id do cliente a ser removido: ");
+          //        scanf("%d", &pos);
+          //        removeCliente(pos);
+        //          break;
+        //  case 5: deposito(money, conta, ag, contdep);
+        //          break;
           case 0: printf("Programa finalizado.\n");
                   break;
           default: printf("Opção inválida.\n");
