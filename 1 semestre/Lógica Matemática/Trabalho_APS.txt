@@ -1,0 +1,79 @@
+﻿1)
+
+
+gerador(jorge,joao).
+gerador(jorge,marcos).
+gerador(maria,marcos).
+gerador(maria,joao).
+irmao(F1, F2) :-  gerador(G1, F1), gerador(G1, F2).
+
+
+2)
+
+
+gerador(jorge,joao).
+gerador(jorge,marcos).
+gerador(maria,marcos).
+gerador(maria,joao).
+gerador(nelson, jorge).
+gerador(adilson, maria).
+avo(A, N) :-
+        gerador(A, G), gerador(G, N).
+
+
+3)
+
+
+a. patrao(X,samuel)                                               b. patrao(judite,X)
+X = anita                                                X = migue
+X = kim
+X = joana
+X = hamal
+X = henrique
+X = jeferson
+
+
+c. supervisor(anita,x)                                        d. supervisor(miguel,x)
+X = judite                                                X = joana
+X = samuel                                                X = hamal
+X = miguel
+X = kim
+X = joana                                        e. supervisor(X,henrique)
+X = hamal                                                X = kim
+X = henrique                                                X = anita
+X = jeferson                                                X = judite
+
+
+
+
+________________
+
+
+4)
+
+a - capitais(X,pequena)
+b - capitais(X,pequena),pertence(X,Y)
+c - capitais(X,grande), pertencer(X, nordeste)
+d - cosmopolita(X) :-
+    capitais(X,grande), ( pertencer(X,sul); pertencer(X,sudeste) ).
+e - capitais(X,grande), ( pertencer(X,sul); pertencer(X,sudeste) )
+
+5)
+a) eProfessorDe(P,A):-
+        instrutor(P, D), matriculado(A, D).
+
+
+b) false
+
+
+c) X = cs301
+
+
+d) X = joana
+
+
+e) X = chan
+    X = grossman
+
+
+f) false
